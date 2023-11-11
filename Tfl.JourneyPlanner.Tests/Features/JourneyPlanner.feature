@@ -1,9 +1,5 @@
 ﻿Feature: JourneyPlanner
 
 
-@mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+Scenario: 1. User can be planned a valid journey using the Journey Planner widget with valid locations
+	Given the user navigate to tfl journey planner website
