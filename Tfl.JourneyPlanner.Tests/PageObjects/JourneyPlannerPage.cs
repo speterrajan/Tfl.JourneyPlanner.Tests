@@ -31,6 +31,8 @@ namespace Tfl.JourneyPlanner.Tests.PageObjects
 
         public void InputAndSearch(JourneyLocationsTable location, bool clickPlanJourneyButton)
         {
+            Wait.Until(_ => FromLocationElement.Displayed);
+
             if (!string.IsNullOrEmpty(location.From))
             {
                 FromLocationElement.SendKeys(location.From);

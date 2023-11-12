@@ -60,6 +60,7 @@ namespace Tfl.JourneyPlanner.Tests.PageObjects
         public JourneyLocationsTable GetResultsSumaryFromLocation()
         {
             var resultsSummary = Driver.FindElement(By.ClassName("from-to-wrapper"));
+            Wait.Until(_ => resultsSummary.Displayed);
             var results = new JourneyLocationsTable
             {
                 From = resultsSummary.FindElement(By.XPath(".//span[contains(text(),'From:')]/../span[@class='notranslate']")).Text,
