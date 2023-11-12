@@ -68,6 +68,18 @@ namespace Tfl.JourneyPlanner.Tests.StepDefinitions
             PageContext.JourneyResults.ClickUpdateJourneyButton();
         }
 
+        [When(@"the user click plan a journey link")]
+        public void WhenTheUserClickPlanAJourneyLink()
+        {
+            PageContext.JourneyResults.ClickPlanAJourneyTab();
+        }
+
+        [When(@"the user click on the top recent journey")]
+        public void WhenTheUserClickOnTheTopRecentJourney()
+        {
+            PageContext.JourneyPlanner.ClickTopOneRecentJourneySearch();
+        }
+
         [Then(@"the valid Journey results should be displayed")]
         public void ThenTheValidJourneyResultsShouldBeDisplayed()
         {
@@ -93,6 +105,23 @@ namespace Tfl.JourneyPlanner.Tests.StepDefinitions
         {
             var inputLocations = table.CreateInstance<JourneyLocationsTable>();
             PageContext.JourneyResults.GetResultsSumaryFromLocation().Should().BeEquivalentTo(inputLocations);
+        }
+
+        [Then(@"the field '([^']*)' validation message '([^']*)' should be displayed")]
+        public void ThenTheFieldValidationMessageShouldBeDisplayed(string fieldName, string errorMessage)
+        {
+            if (fieldName == "From")
+            {
+                PageContext.JourneyPlanner.GetFromLocationError().Should().Be(errorMessage);
+            }
+            else if (fieldName == "To")
+            {
+                PageContext.JourneyPlanner.GetToLocationError().Should().Be(errorMessage);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid field name");
+            }
         }
     }
 }

@@ -10,28 +10,29 @@ namespace Tfl.JourneyPlanner.Tests.PageObjects
         public JourneyResultsPage(WebDriverContext context) : base(context)
         {
         }
-        private IWebElement JourneyResultHeader => Driver.FindElement(By.XPath("//*[contains(@class, 'jp-results-headline')]"));
-        private IWebElement EarlierJourneys => Driver.FindElement(By.XPath("//a[text()='Earlier journeys']"));
-        private IWebElement LaterJourneys => Driver.FindElement(By.XPath("//a[text()='Later journeys']"));
+        private IWebElement JourneyResultHeaderElement => Driver.FindElement(By.XPath("//*[contains(@class, 'jp-results-headline')]"));
+        private IWebElement EarlierJourneysElement => Driver.FindElement(By.XPath("//a[text()='Earlier journeys']"));
+        private IWebElement LaterJourneysElement => Driver.FindElement(By.XPath("//a[text()='Later journeys']"));
         public IWebElement ErrorMessageElement => Driver.FindElement(By.XPath("//li[@class='field-validation-error']"));
         public IWebElement ResultsSummaryElement => Driver.FindElement(By.ClassName("journey-result-summary"));
-        private IWebElement EditJourneyLink => Driver.FindElement(By.XPath("//*[contains(@class, 'edit-journey')]"));
+        private IWebElement EditJourneyLinkElement => Driver.FindElement(By.XPath("//*[contains(@class, 'edit-journey')]"));
         private IWebElement SwitchJourneyElement => Driver.FindElement(By.XPath("//*[contains(@class, 'switch-button hide-text')]"));
-        private IWebElement UpdateJourneyButton => Driver.FindElement(By.XPath("//*[@id='plan-journey-button']"));
+        private IWebElement UpdateJourneyButtonElement => Driver.FindElement(By.XPath("//*[@id='plan-journey-button']"));
+        private IWebElement PlanAJourneyLinkElement => Driver.FindElement(By.LinkText("Plan a journey"));
 
         public void VerifytheJourneyResult()
         {
-            Wait.Until(_ => JourneyResultHeader.Displayed);
-            Assert.AreEqual("Journey results", JourneyResultHeader.Text);
+            Wait.Until(_ => JourneyResultHeaderElement.Displayed);
+            Assert.AreEqual("Journey results", JourneyResultHeaderElement.Text);
             WaitForPageResultsDisplayed();
-            EarlierJourneys.Displayed.Should().BeTrue();
-            LaterJourneys.Displayed.Should().BeTrue();
+            EarlierJourneysElement.Displayed.Should().BeTrue();
+            LaterJourneysElement.Displayed.Should().BeTrue();
         }
 
         public void WaitForPageResultsDisplayed()
         {
-            Wait.Until(_ => EarlierJourneys.Displayed);
-            Wait.Until(_ => LaterJourneys.Displayed);
+            Wait.Until(_ => EarlierJourneysElement.Displayed);
+            Wait.Until(_ => LaterJourneysElement.Displayed);
         }
 
         public void VerifyArrivingTextOnResults()
@@ -42,7 +43,7 @@ namespace Tfl.JourneyPlanner.Tests.PageObjects
 
         public void ClickEditJourney()
         {
-            EditJourneyLink.Click();
+            EditJourneyLinkElement.Click();
         }
 
         public void ClickSwitchJourney()
@@ -53,7 +54,7 @@ namespace Tfl.JourneyPlanner.Tests.PageObjects
 
         public void ClickUpdateJourneyButton()
         {
-            UpdateJourneyButton.Click();
+            UpdateJourneyButtonElement.Click();
         }
 
         public JourneyLocationsTable GetResultsSumaryFromLocation()
@@ -65,6 +66,12 @@ namespace Tfl.JourneyPlanner.Tests.PageObjects
                 To = resultsSummary.FindElement(By.XPath(".//span[contains(text(),'To:')]/../span[@class='notranslate']")).Text
             };
             return results;
+        }
+
+        public void ClickPlanAJourneyTab()
+        {
+            Wait.Until(_ => PlanAJourneyLinkElement.Displayed);
+            PlanAJourneyLinkElement.Click();
         }
     }
 }
